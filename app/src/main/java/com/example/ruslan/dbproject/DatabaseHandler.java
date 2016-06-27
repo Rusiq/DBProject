@@ -35,6 +35,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
 
+
+
     // Creating Tables
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -60,7 +62,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 
     /**
-     * All CRUD(Create, Read, Update, Delete) Operations
+     * All CRUD(Create, Read) Operations
      */
 
     // Adding new contact

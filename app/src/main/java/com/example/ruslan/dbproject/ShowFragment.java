@@ -41,4 +41,9 @@ public class ShowFragment extends Fragment {
         textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));*/
         return rootView;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 }
