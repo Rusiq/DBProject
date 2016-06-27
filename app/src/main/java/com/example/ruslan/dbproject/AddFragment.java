@@ -11,7 +11,7 @@ import android.widget.EditText;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class AddFragment extends Fragment implements View.OnClickListener {
+public class AddFragment extends Fragment  {
     EditText etFirstName, etLastName, etAdress, etPhone;
     Button btnAdd;
     /**
@@ -19,7 +19,6 @@ public class AddFragment extends Fragment implements View.OnClickListener {
      * fragment.
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
-    private DatabaseHandler db;
 
     public AddFragment() {
     }
@@ -41,6 +40,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_add, container, false);
 
+        final DatabaseHandler db = new DatabaseHandler(getActivity());
 
         etFirstName = (EditText) rootView.findViewById(R.id.etFirstName);
         etLastName = (EditText) rootView.findViewById(R.id.etLastName);
@@ -48,9 +48,15 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         etPhone = (EditText) rootView.findViewById(R.id.etPhone);
         btnAdd = (Button) rootView.findViewById(R.id.btnAdd);
 
-        btnAdd.setOnClickListener(this);
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Inserting Contacts
 
-        DatabaseHandler db = new DatabaseHandler(getActivity());
+                db.addContact(new Contact(etFirstName.getText().toString(), etLastName.getText().toString(), etAdress.getText().toString(), etPhone.getText().toString()));
+            }
+        });
+
 
 
 
@@ -60,11 +66,4 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         return rootView;
     }
 
-    @Override
-    public void onClick(View view) {
-
-        // Inserting Contacts
-
-        db.addContact(new Contact(etFirstName.getText().toString(), etLastName.getText().toString(), etAdress.getText().toString(), etPhone.getText().toString()));
-    }
 }
