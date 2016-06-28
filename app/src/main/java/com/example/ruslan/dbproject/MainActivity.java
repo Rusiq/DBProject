@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+      /*  mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -77,7 +77,9 @@ public class MainActivity extends AppCompatActivity {
             public void onPageScrollStateChanged(int state) {
 
             }
-        });
+
+        });*/
+
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 

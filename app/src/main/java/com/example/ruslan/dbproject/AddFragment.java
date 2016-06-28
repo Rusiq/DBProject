@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -52,8 +53,9 @@ public class AddFragment extends Fragment  {
             @Override
             public void onClick(View view) {
                 // Inserting Contacts
-
                 db.addContact(new Contact(etFirstName.getText().toString(), etLastName.getText().toString(), etAdress.getText().toString(), etPhone.getText().toString()));
+                Toast toast = Toast.makeText(getActivity(), "The database is updated", Toast.LENGTH_SHORT);
+                toast.show();
             }
         });
 
