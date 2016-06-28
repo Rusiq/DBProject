@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SimpleCursorAdapter;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +23,7 @@ public class ShowFragment extends Fragment {
     private DatabaseHandler databaseHandler;
     private static final String ARG_SECTION_NUMBER = "section_number";
     //private SimpleCursorAdapter scAdaper;
-    RecyclerView lvContact;
+    ListView lvContact;
 
     public ShowFragment() {
     }
@@ -49,11 +47,10 @@ public class ShowFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_show, container, false);
         databaseHandler = new DatabaseHandler(getActivity());
 
-        lvContact = (RecyclerView) rootView.findViewById(R.id.lvContact);
-        lvContact.setLayoutManager(new LinearLayoutManager(getActivity()));
+        lvContact = (ListView) rootView.findViewById(R.id.lvContact);
         ArrayList<Contact> contacts = (ArrayList<Contact>) databaseHandler.getAllContacts();
         DataAdapter adapter = new DataAdapter(getActivity(), contacts);
-       // lvContact.setAdapter(adapter);
+        lvContact.setAdapter(adapter);
 
         // lvContact.setAdapter(scAdaper);
         //String[] from = new String[]{  };
