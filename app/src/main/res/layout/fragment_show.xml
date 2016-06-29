@@ -1,12 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
 
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:windowSoftInputMode="stateHidden">
+
+<<<<<<< Updated upstream
     <android.support.v7.widget.RecyclerView
         android:id="@+id/lvContact"
+=======
+    <LinearLayout
+>>>>>>> Stashed changes
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp">
 
+<<<<<<< Updated upstream
+=======
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+
+            android:layout_weight="0.75"
+            android:paddingLeft="25dp"
+            android:id="@+id/filter"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="0.25"
+            android:text="Search"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvContact"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        android:windowSoftInputMode="stateHidden"/>
+
+
+    <!--  <ListView
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:id="@+id/lvContact"></ListView>-->
+
+>>>>>>> Stashed changes
 </LinearLayout>
