@@ -1,6 +1,7 @@
 package com.example.ruslan.dbproject;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
@@ -28,15 +29,11 @@ public class ShowFragment extends Fragment {
     private DatabaseHandler databaseHandler;
     private static final String ARG_SECTION_NUMBER = "section_number";
     //private SimpleCursorAdapter scAdaper;
-<<<<<<< Updated upstream
-    RecyclerView lvContact;
-=======
     RecyclerView rvContact;
     EditText filter;
     private LinearLayoutManager mLayoutManager;
     private Context context;
     private DataAdapter adapter;
->>>>>>> Stashed changes
 
     public ShowFragment() {
     }
@@ -60,12 +57,6 @@ public class ShowFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_show, container, false);
         databaseHandler = new DatabaseHandler(getActivity());
 
-<<<<<<< Updated upstream
-        lvContact = (RecyclerView) rootView.findViewById(R.id.lvContact);
-        lvContact.setLayoutManager(new LinearLayoutManager(getActivity()));
-        ArrayList<Contact> contacts = (ArrayList<Contact>) databaseHandler.getAllContacts();
-        DataAdapter adapter = new DataAdapter(getActivity(), contacts);
-=======
         filter = (EditText) rootView.findViewById(R.id.filter);
 
 
@@ -84,7 +75,6 @@ public class ShowFragment extends Fragment {
         DataAdapter adapter = new DataAdapter(getActivity(), contacts);
        // adapter.setNotifyOnChange(true);
         rvContact.setAdapter(adapter);
->>>>>>> Stashed changes
        // lvContact.setAdapter(adapter);
 
         // lvContact.setAdapter(scAdaper);
@@ -98,13 +88,7 @@ public class ShowFragment extends Fragment {
         return rootView;
     }
 
-    private String [] getDataSet(){
-        String[] mDataSet = new String[100];
-        for (int i = 0; i < 100; i++){
-            mDataSet[i] = "item" + i;
-        }
-        return mDataSet;
-    }
+
 
 
     @Override
@@ -126,3 +110,35 @@ public class ShowFragment extends Fragment {
         } else adapter.notifyDataSetChanged();
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*databaseHandler = new DatabaseHandler(getActivity());
+
+        rvContact = (RecyclerView) rootView.findViewById(R.id.rvContact);
+        rvContact.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        rvContact.setHasFixedSize(true);
+
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        rvContact.setLayoutManager(mLayoutManager);
+
+        mAdapter = new MyAdapter(myDataset);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        ArrayList<Contact> contacts = (ArrayList<Contact>) databaseHandler.getAllContacts();
+        DataAdapter adapter = new DataAdapter(getActivity(), contacts);*/

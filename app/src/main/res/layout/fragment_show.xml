@@ -6,20 +6,13 @@
               android:orientation="vertical"
               android:windowSoftInputMode="stateHidden">
 
-<<<<<<< Updated upstream
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/lvContact"
-=======
     <LinearLayout
->>>>>>> Stashed changes
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp">
 
-<<<<<<< Updated upstream
-=======
         <EditText
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -49,5 +42,4 @@
           android:layout_height="match_parent"
           android:id="@+id/lvContact"></ListView>-->
 
->>>>>>> Stashed changes
 </LinearLayout>

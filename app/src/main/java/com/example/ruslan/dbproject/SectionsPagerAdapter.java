@@ -23,6 +23,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
             return AddFragment.newInstance(position + 1);
         } else {
             return ShowFragment.newInstance(position + 1);
+
         }
     }
 
