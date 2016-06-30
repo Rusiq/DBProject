@@ -12,30 +12,28 @@ import java.util.List;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
+
     // All Static variables
     // Database Version
     private static final int DATABASE_VERSION = 1;
 
     // Database Name
-    private static final String DATABASE_NAME = "contactsManager";
+    public static final String DATABASE_NAME = "contactsManager";
 
     // Contacts table name
-    private static final String TABLE_CONTACTS = "contacts";
+    public static final String TABLE_CONTACTS = "contacts";
 
     // Contacts Table Columns names
-    private static final String KEY_ID = "id";
-    private static final String KEY_FIRST_NAME = "first_name";
-    private static final String KEY_LAST_NAME = "last_name";
-    private static final String KEY_ADRESS = "adress";
-    private static final String KEY_PH_NO = "phone_number";
+    public static final String KEY_ID = "id";
+    public static final String KEY_FIRST_NAME = "first_name";
+    public static final String KEY_LAST_NAME = "last_name";
+    public static final String KEY_ADRESS = "adress";
+    public static final String KEY_PH_NO = "phone_number";
 
 
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
-
-
-
 
     // Creating Tables
     @Override
@@ -57,8 +55,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // Create tables again
         onCreate(db);
     }
-
-
 
 
     /**
@@ -124,4 +120,5 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // return contact list
         return contactList;
     }
+
 }

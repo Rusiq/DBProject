@@ -1,9 +1,8 @@
 package com.example.ruslan.dbproject;
 
 
-import android.content.Context;
+import android.database.SQLException;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,12 +13,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
+import android.widget.FilterQueryProvider;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ShowFragment extends Fragment {
 
@@ -33,11 +31,17 @@ public class ShowFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     RecyclerView rvContact;
     EditText filter;
+    Button btnSearch;
+  //  SearchView mSearchView;
+    String searchText;
     private LinearLayoutManager mLayoutManager;
   //  private Context context;
     private DataAdapter adapter;
 
+
+
    private ArrayList<Contact> contacts = new ArrayList<>();
+    private ArrayList<Contact> contactsDisplay = new ArrayList<>();
     public ShowFragment() {
     }
 
@@ -60,57 +64,45 @@ public class ShowFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_show, container, false);
         databaseHandler = new DatabaseHandler(getActivity());
 
+        btnSearch = (Button) rootView.findViewById(R.id.btnSearch);
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchList();
+            }
+        });
+
         filter = (EditText) rootView.findViewById(R.id.filter);
-
-
-        rvContact = (RecyclerView) rootView.findViewById(R.id.rvContact);
-        rvContact.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        // rvContact.setHasFixedSize(true);
-
-        mLayoutManager = new LinearLayoutManager(getActivity());
-        rvContact.setLayoutManager(mLayoutManager);
-
-
         filter.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            public void afterTextChanged(Editable s) {
+
+                for(Contact contact : contacts){
+                    if(contact.getFirstName() != null && contact.getFirstName().contains(filter.getText().toString())) {
+                        contactsDisplay.add(contact);
+                    }
+                }
             }
 
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
+            // при изменении текста выполняем фильтрацию
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-            @Override
-            public void afterTextChanged(Editable editable) {
 
             }
         });
 
-       // DataAdapter = new DataAdapter(context, );
-       // rvContact.setLayoutManager(mLayoutManager);
+        rvContact = (RecyclerView) rootView.findViewById(R.id.rvContact);
+        rvContact.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+       // searchText = filter.getText().toString();
+        // rvContact.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        rvContact.setLayoutManager(mLayoutManager);
 
-       // contacts.addAll((ArrayList<Contact>) databaseHandler.getAllContacts());
-       // adapter = new DataAdapter(getActivity(), contacts);
-       // adapter.setNotifyOnChange(true);
-       // rvContact.setAdapter(adapter);
-       // lvContact.setAdapter(adapter);
-
-        // lvContact.setAdapter(scAdaper);
-        //String[] from = new String[]{  };
-        //int[] to = new int[]{ R.id.tvShowFirstName, R.id.tvShowLastName, R.id.tvShowAdress, R.id.tvShowPhone };
-
-        //List<Contact> contactList = databaseHandler.getAllContacts();
-
-        /*TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-        textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));*/
         return rootView;
     }
-
-
 
 
     public void updateList(){
@@ -124,6 +116,41 @@ public class ShowFragment extends Fragment {
         super.onResume();
         Log.d("onResume", "onResume " + databaseHandler);
         updateUI();
+
+//        try {
+//            db.open();
+//            cursor = db.database.rawQuery("select * from " + DatabaseHandler.TABLE_CONTACTS, null);
+//            String[] headers = new String[]{DatabaseHandler.KEY_FIRST_NAME, DatabaseHandler.KEY_LAST_NAME, DatabaseHandler.KEY_ADRESS, DatabaseHandler.KEY_PH_NO };
+//            adapter = new SimpleCursorAdapter(this, R.layout.list_item,
+//                    cursor, headers, new int[]{R.id.tvShowFirstName, R.id.tvShowLastName, R.id.tvShowAdress, R.id.tvShowPhone}, 0);
+//
+//            // если в текстовом поле есть текст, выполняем фильтрацию
+//            // данная проверка нужна при переходе от одной ориентации экрана к другой
+//            if(!filter.getText().toString().isEmpty())
+//                adapter.getFilter().filter(filter.getText().toString());
+//
+//            // установка слушателя изменения текста
+//
+//            // устанавливаем провайдер фильтрации
+//            adapter.setFilterQueryProvider(new FilterQueryProvider() {
+//                @Override
+//                public cursor runQuery(CharSequence constraint) {
+//
+//                    if (constraint == null || constraint.length() == 0) {
+//
+//                        return db.database.rawQuery("select * from " + DatabaseHandler.TABLE_CONTACTS, null);
+//                    }
+//                    else {
+//                        return db.database.rawQuery("select * from " + DatabaseHandler.TABLE_CONTACTS + " where * " +
+//                                /*DatabaseHandler.KEY_FIRST_NAME +*/ " like ?", new String[]{"%" + constraint.toString() + "%"});
+//                    }
+//                }
+//            });
+//
+//            rvContact.setAdapter(adapter);;
+//        }
+//        catch (SQLException ex){}
+
     }
 
     private void updateUI(){
@@ -134,36 +161,13 @@ public class ShowFragment extends Fragment {
             rvContact.setAdapter(adapter);
         } else adapter.notifyDataSetChanged();
     }
+
+    private void searchList(){
+        contacts.clear();
+        contacts.addAll((ArrayList<Contact>) databaseHandler.getAllContacts());
+        if (adapter == null){
+            adapter = new DataAdapter(getActivity(), contactsDisplay);
+            rvContact.setAdapter(adapter);
+        } else adapter.notifyDataSetChanged();
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*databaseHandler = new DatabaseHandler(getActivity());
-
-        rvContact = (RecyclerView) rootView.findViewById(R.id.rvContact);
-        rvContact.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        rvContact.setHasFixedSize(true);
-
-        mLayoutManager = new LinearLayoutManager(getActivity());
-        rvContact.setLayoutManager(mLayoutManager);
-
-        mAdapter = new MyAdapter(myDataset);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
-        ArrayList<Contact> contacts = (ArrayList<Contact>) databaseHandler.getAllContacts();
-        DataAdapter adapter = new DataAdapter(getActivity(), contacts);*/

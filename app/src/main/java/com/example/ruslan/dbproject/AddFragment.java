@@ -3,6 +3,7 @@ package com.example.ruslan.dbproject;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ public class AddFragment extends Fragment {
     EditText etFirstName, etLastName, etAdress, etPhone;
     Button btnAdd;
     RecyclerView rvContact;
+
     private DataAdapter adapter;
     /**
      * The fragment argument representing the section number for this
@@ -54,6 +56,8 @@ public class AddFragment extends Fragment {
         etPhone = (EditText) rootView.findViewById(R.id.etPhone);
         btnAdd = (Button) rootView.findViewById(R.id.btnAdd);
 
+
+
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,8 +72,9 @@ public class AddFragment extends Fragment {
                     toast.show();
 
                     //ArrayList<Contact> contacts = (ArrayList<Contact>) databaseHandler.getAllContacts();
-                   // mContactList.clear();
-                   // adapter.notifyDataSetChanged();
+
+                    //mContactList.clear();
+                    //adapter.notifyDataSetChanged();
                 }
 
             }
