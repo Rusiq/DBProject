@@ -11,6 +11,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
+    private static ShowFragment sShowFragment;
+
+
     public SectionsPagerAdapter(FragmentManager fm) {
         super(fm);
     }
@@ -22,8 +25,9 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         if (position == 0) {
             return AddFragment.newInstance(position + 1);
         } else {
-            return ShowFragment.newInstance(position + 1);
-
+            if (sShowFragment == null)
+                sShowFragment = ShowFragment.newInstance(position + 1);
+            return sShowFragment;
         }
     }
 

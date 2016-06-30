@@ -67,7 +67,9 @@ public class AddFragment extends Fragment {
                     Toast toast = Toast.makeText(getActivity(), "The database is updated", Toast.LENGTH_SHORT);
                     toast.show();
 
-                  //  adapter.notifyDataSetChanged();
+                    //ArrayList<Contact> contacts = (ArrayList<Contact>) databaseHandler.getAllContacts();
+                   // mContactList.clear();
+                   // adapter.notifyDataSetChanged();
                 }
 
             }

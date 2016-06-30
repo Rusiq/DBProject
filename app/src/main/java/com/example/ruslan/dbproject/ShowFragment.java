@@ -8,6 +8,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,13 +31,13 @@ public class ShowFragment extends Fragment {
 
     private DatabaseHandler databaseHandler;
     private static final String ARG_SECTION_NUMBER = "section_number";
-    //private SimpleCursorAdapter scAdaper;
     RecyclerView rvContact;
     EditText filter;
     private LinearLayoutManager mLayoutManager;
-    private Context context;
+  //  private Context context;
     private DataAdapter adapter;
 
+   private ArrayList<Contact> contacts = new ArrayList<>();
     public ShowFragment() {
     }
 
@@ -68,13 +71,32 @@ public class ShowFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getActivity());
         rvContact.setLayoutManager(mLayoutManager);
 
+
+        filter.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
        // DataAdapter = new DataAdapter(context, );
        // rvContact.setLayoutManager(mLayoutManager);
 
-        ArrayList<Contact> contacts = (ArrayList<Contact>) databaseHandler.getAllContacts();
-        DataAdapter adapter = new DataAdapter(getActivity(), contacts);
+
+       // contacts.addAll((ArrayList<Contact>) databaseHandler.getAllContacts());
+       // adapter = new DataAdapter(getActivity(), contacts);
        // adapter.setNotifyOnChange(true);
-        rvContact.setAdapter(adapter);
+       // rvContact.setAdapter(adapter);
        // lvContact.setAdapter(adapter);
 
         // lvContact.setAdapter(scAdaper);
@@ -91,19 +113,22 @@ public class ShowFragment extends Fragment {
 
 
 
+    public void updateList(){
+        contacts.clear();
+        contacts.addAll((ArrayList<Contact>) databaseHandler.getAllContacts());
+        adapter.notifyDataSetChanged();
+    }
+
     @Override
     public void onResume() {
         super.onResume();
-
-
+        Log.d("onResume", "onResume " + databaseHandler);
+        updateUI();
     }
 
     private void updateUI(){
-
-        databaseHandler = new DatabaseHandler(getActivity());
-        ArrayList<Contact> contacts = (ArrayList<Contact>) databaseHandler.getAllContacts();
-
-
+        contacts.clear();
+        contacts.addAll((ArrayList<Contact>) databaseHandler.getAllContacts());
         if (adapter == null){
             adapter = new DataAdapter(getActivity(), contacts);
             rvContact.setAdapter(adapter);
