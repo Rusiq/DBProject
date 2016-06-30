@@ -8,6 +8,7 @@ import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -68,7 +69,7 @@ public class ShowFragment extends Fragment {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                searchList();
+                searchList(filter.getText().toString());
             }
         });
 
@@ -77,19 +78,16 @@ public class ShowFragment extends Fragment {
 
             public void afterTextChanged(Editable s) {
 
-                for(Contact contact : contacts){
-                    if(contact.getFirstName() != null && contact.getFirstName().contains(filter.getText().toString())) {
-                        contactsDisplay.add(contact);
-                    }
-                }
+
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
             // при изменении текста выполняем фильтрацию
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-
+                if(filter.getText().length()>2) {
+                    searchList(s.toString());
+                }
             }
         });
 
@@ -162,12 +160,14 @@ public class ShowFragment extends Fragment {
         } else adapter.notifyDataSetChanged();
     }
 
-    private void searchList(){
+    private void searchList(String search){
         contacts.clear();
-        contacts.addAll((ArrayList<Contact>) databaseHandler.getAllContacts());
-        if (adapter == null){
-            adapter = new DataAdapter(getActivity(), contactsDisplay);
-            rvContact.setAdapter(adapter);
-        } else adapter.notifyDataSetChanged();
+        ArrayList<Contact> inputList =(ArrayList<Contact>) databaseHandler.getAllContacts();
+        for(Contact contact: inputList){
+            if (!TextUtils.isEmpty(contact.getFirstName())  && contact.getFirstName().toLowerCase().contains(search.toLowerCase())){
+                contacts.add(contact);
+            }
+        }
+        adapter.notifyDataSetChanged();
     }
 }
