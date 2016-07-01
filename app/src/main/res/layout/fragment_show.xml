@@ -14,18 +14,11 @@
     android:layout_marginTop="10dp">
     
     <EditText
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.75"
+        android:hint="@string/search"
         android:id="@+id/filter"/>
-    
-    <Button
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:text="Search"
-        android:layout_weight="0.25
-        "
-        android:id="@+id/btnSearch"/>
+
 </LinearLayout>
     
     

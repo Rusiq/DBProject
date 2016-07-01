@@ -4,11 +4,14 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -57,18 +60,18 @@ public class AddFragment extends Fragment {
         btnAdd = (Button) rootView.findViewById(R.id.btnAdd);
 
 
-
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if (etFirstName.getText().toString().equals("") || etLastName.getText().toString().equals("") || etAdress.getText().toString().equals("") || etPhone.getText().toString().equals("")) {
-                    Toast toast = Toast.makeText(getActivity(), "Fields is empty!", Toast.LENGTH_SHORT);
-                    toast.show();
+                if (etFirstName.getText().toString().trim().equals("") || etLastName.getText().toString().trim().equals("") || etAdress.getText().toString().trim().equals("") || etPhone.getText().toString().trim().equals("")) {
+                    /*Toast toast = Toast.makeText(getActivity(), R.string.empty, Toast.LENGTH_SHORT);
+                    toast.show();*/
+                    showToast(view);
                 } else {
                     // Inserting Contacts
                     db.addContact(new Contact(etFirstName.getText().toString(), etLastName.getText().toString(), etAdress.getText().toString(), etPhone.getText().toString()));
-                    Toast toast = Toast.makeText(getActivity(), "The database is updated", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getActivity(), R.string.update_db, Toast.LENGTH_SHORT);
                     toast.show();
 
                     //ArrayList<Contact> contacts = (ArrayList<Contact>) databaseHandler.getAllContacts();
@@ -87,6 +90,17 @@ public class AddFragment extends Fragment {
        /* TextView textView = (TextView) rootView.findViewById(R.id.section_label);
         textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));*/
         return rootView;
+    }
+
+    public void showToast(View view) {
+        Toast toastEmpty = Toast.makeText(getActivity(),
+                R.string.empty, Toast.LENGTH_LONG);
+        toastEmpty.setGravity(Gravity.CENTER, 0, 0);
+        LinearLayout toastContainer = (LinearLayout) toastEmpty.getView();
+        ImageView catImageView = new ImageView(getActivity());
+        catImageView.setImageResource(R.drawable.ic_error_outline_black_24dp);
+        toastContainer.addView(catImageView, 0);
+        toastEmpty.show();
     }
 
 }

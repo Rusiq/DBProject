@@ -50,11 +50,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
@@ -64,16 +62,12 @@ public class MainActivity extends AppCompatActivity {
                     Fragment fr = mSectionsPagerAdapter.getItem(mViewPager.getCurrentItem());
                     if (fr != null && fr instanceof ShowFragment ){
                         ((ShowFragment)fr).onResume();
-
-
-
                     }
                 }
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
 
         });

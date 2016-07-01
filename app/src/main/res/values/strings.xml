@@ -8,4 +8,7 @@
     <string name="adress">Adress</string>
     <string name="phone">Phone number</string>
     <string name="add">Add</string>
+    <string name="search">Enter to search...</string>
+    <string name="empty">Fields is empty!</string>
+    <string name="update_db">The database is updated</string>
 </resources>

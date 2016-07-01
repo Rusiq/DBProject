@@ -1,12 +1,10 @@
 package com.example.ruslan.dbproject;
 
-
-import android.database.SQLException;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -16,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FilterQueryProvider;
 
 import java.util.ArrayList;
 
@@ -32,17 +29,17 @@ public class ShowFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     RecyclerView rvContact;
     EditText filter;
-    Button btnSearch;
-  //  SearchView mSearchView;
+    //  Button btnSearch;
+    //  SearchView mSearchView;
     String searchText;
     private LinearLayoutManager mLayoutManager;
-  //  private Context context;
-    private DataAdapter adapter;
+    //  private Context context;
+    public DataAdapter adapter;
 
 
-
-   private ArrayList<Contact> contacts = new ArrayList<>();
+    private ArrayList<Contact> contacts = new ArrayList<>();
     private ArrayList<Contact> contactsDisplay = new ArrayList<>();
+
     public ShowFragment() {
     }
 
@@ -65,45 +62,49 @@ public class ShowFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_show, container, false);
         databaseHandler = new DatabaseHandler(getActivity());
 
-        btnSearch = (Button) rootView.findViewById(R.id.btnSearch);
-        btnSearch.setOnClickListener(new View.OnClickListener() {
+        //   btnSearch = (Button) rootView.findViewById(R.id.btnSearch);
+       /* btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 searchList(filter.getText().toString());
             }
-        });
+        });*/
 
         filter = (EditText) rootView.findViewById(R.id.filter);
         filter.addTextChangedListener(new TextWatcher() {
 
             public void afterTextChanged(Editable s) {
 
-
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
             }
-            // при изменении текста выполняем фильтрацию
+
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(filter.getText().length()>2) {
+                if (filter.getText().length() > 2) {
                     searchList(s.toString());
-                }
+                } else updateUI();
             }
         });
 
         rvContact = (RecyclerView) rootView.findViewById(R.id.rvContact);
         rvContact.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-       // searchText = filter.getText().toString();
+        // searchText = filter.getText().toString();
         // rvContact.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity());
         rvContact.setLayoutManager(mLayoutManager);
+
+
+        ItemTouchHelper.Callback callback = new SwipeHelper(adapter);
+        ItemTouchHelper helper = new ItemTouchHelper(callback);
+        helper.attachToRecyclerView(rvContact);
 
         return rootView;
     }
 
 
-    public void updateList(){
+    public void updateList() {
         contacts.clear();
         contacts.addAll((ArrayList<Contact>) databaseHandler.getAllContacts());
         adapter.notifyDataSetChanged();
@@ -151,20 +152,27 @@ public class ShowFragment extends Fragment {
 
     }
 
-    private void updateUI(){
+
+    private void updateUI() {
         contacts.clear();
         contacts.addAll((ArrayList<Contact>) databaseHandler.getAllContacts());
-        if (adapter == null){
+        if (adapter == null) {
             adapter = new DataAdapter(getActivity(), contacts);
             rvContact.setAdapter(adapter);
         } else adapter.notifyDataSetChanged();
     }
 
-    private void searchList(String search){
+    private void searchList(String search) {
         contacts.clear();
-        ArrayList<Contact> inputList =(ArrayList<Contact>) databaseHandler.getAllContacts();
-        for(Contact contact: inputList){
-            if (!TextUtils.isEmpty(contact.getFirstName())  && contact.getFirstName().toLowerCase().contains(search.toLowerCase())){
+        ArrayList<Contact> inputList = (ArrayList<Contact>) databaseHandler.getAllContacts();
+        for (Contact contact : inputList) {
+            if (!TextUtils.isEmpty(contact.getFirstName()) && contact.getFirstName().toLowerCase().contains(search.toLowerCase())) {
+                contacts.add(contact);
+            } else if (!TextUtils.isEmpty(contact.getLastName()) && contact.getLastName().toLowerCase().contains(search.toLowerCase())) {
+                contacts.add(contact);
+            } else if (!TextUtils.isEmpty(contact.getAdress()) && contact.getAdress().toLowerCase().contains(search.toLowerCase())) {
+                contacts.add(contact);
+            } else if (!TextUtils.isEmpty(contact.getPhoneNumber()) && contact.getPhoneNumber().toLowerCase().contains(search.toLowerCase())) {
                 contacts.add(contact);
             }
         }

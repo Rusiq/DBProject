@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="first_name">Имя</string>
+    <string name="last_name">Фамилия</string>
+    <string name="adress">Адрес</string>
+    <string name="phone">Телефон</string>
+    <string name="add">Добавить</string>
+    <string name="search">Введите для поиска...</string>
+    <string name="empty">Заполните пустые поля!</string>
+    <string name="update_db">База данных обновлена</string>
+</resources>
