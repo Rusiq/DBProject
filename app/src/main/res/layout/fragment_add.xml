@@ -2,6 +2,7 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:paddingBottom="0dp"
               android:paddingLeft="0dp"
@@ -56,6 +57,7 @@
                             android:id="@+id/etFirstName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:maxLines="1"
                             android:layout_marginLeft="@dimen/size_small_24"
                             android:hint="@string/first_name"/>
 
@@ -69,6 +71,7 @@
                             android:id="@+id/etLastName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:maxLines="1"
                             android:layout_marginLeft="@dimen/size_small_24"
                             android:hint="@string/last_name"/>
 
@@ -98,6 +101,7 @@
                         android:id="@+id/etAdress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:maxLines="1"
                         android:layout_marginLeft="@dimen/size_small_24"
                         android:hint="@string/adress"/>
 
@@ -125,11 +129,13 @@
                         android:id="@+id/etPhone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:maxLength="14"
                         android:layout_marginLeft="@dimen/size_small_24"
                         android:hint="@string/phone"
                         android:inputType="phone"/>
-
                 </android.support.design.widget.TextInputLayout>
+
             </LinearLayout>
 
             <Button
